@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Valentine 💕</title>
+
+<style>
+:root{
+  --pink:#ff4d6d;
+  --light:#fff1f4;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  min-height:100vh;
+  background:linear-gradient(180deg,#ffd9e0,#fff1f4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:system-ui,-apple-system;
+  overflow:hidden;
+}
+
+/* ❤️ BACKGROUND HEARTS */
+.heart{
+  position:absolute;
+  font-size:18px;
+  animation:float 8s linear infinite;
+  opacity:0.8;
+}
+
+@keyframes float{
+  from{transform:translateY(100vh) scale(1);}
+  to{transform:translateY(-10vh) scale(1.5);opacity:0;}
+}
+
+/* ---------- CARD ---------- */
+.card{
+  width:92%;
+  max-width:360px;
+  background:#fff;
+  padding:28px 22px;
+  border-radius:24px;
+  text-align:center;
+  box-shadow:0 25px 45px rgba(0,0,0,0.18);
+  position:relative;
+  z-index:2;
+}
+
+h1{
+  color:var(--pink);
+  font-size:1.9rem;
+}
+
+h2{
+  margin:6px 0 16px;
+  font-size:1rem;
+  color:#555;
+}
+
+/* ---------- PILL YES / NO ---------- */
+.pill{
+  margin:18px auto;
+  background:#ffe3e9;
+  border-radius:30px;
+  padding:6px;
+  display:flex;
+  position:relative;
+  height:46px;
+}
+
+.pill button{
+  flex:1;
+  border:none;
+  background:none;
+  font-size:0.95rem;
+  cursor:pointer;
+  z-index:2;
+}
+
+#yes{
+  color:white;
+  font-weight:600;
+}
+
+.slider{
+  position:absolute;
+  top:6px;
+  left:6px;
+  height:34px;
+  width:50%;
+  background:var(--pink);
+  border-radius:22px;
+  transition:0.4s ease;
+}
+
+/* ---------- CONTENT ---------- */
+#yesContent{
+  display:none;
+  margin-top:12px;
+}
+
+#yesContent img{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  object-fit:cover;
+  margin:10px 0;
+}
+
+.btn{
+  margin-top:10px;
+  padding:10px 18px;
+  border:none;
+  border-radius:22px;
+  background:#f1f1f1;
+  cursor:pointer;
+  font-size:0.85rem;
+}
+
+/* ---------- LETTER POPUP ---------- */
+#letter{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.6);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:16px;
+  z-index:50;
+}
+
+.letter-box{
+  background:#fffafc;
+  width:100%;
+  max-width:340px;
+  max-height:80vh;
+  overflow:auto;
+  padding:20px;
+  border-radius:18px;
+  font-size:0.95rem;
+  line-height:1.5;
+}
+
+/* ---------- MOBILE ---------- */
+@media(max-width:360px){
+  .card{padding:22px 16px;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 MUSIC -->
+<audio id="music" loop>
+  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" type="audio/mpeg">
+</audio>
+
+<!-- ❤️ CARD -->
+<div class="card">
+  <h1>AKSH 💕</h1>
+  <h2>Will You Be My Valentine?</h2>
+
+  <div class="pill">
+    <div class="slider" id="slider"></div>
+    <button onclick="noClick()">NO 😈</button>
+    <button onclick="yesClick()" id="yes">YES ❤️</button>
+  </div>
+
+  <div id="yesContent">
+    <p>You make my life more beautiful every day 💖</p>
+
+    <!-- PHOTO -->
+    <img src="IMG-20251224-WA0563.jpg" alt="Her Photo">
+
+    <p>I choose you, always 🌹</p>
+
+    <button class="btn" onclick="openLetter()">Read My Letter 💌</button><br>
+
+    <a id="whatsapp" target="_blank">
+      <button class="btn">Share on WhatsApp 📱</button>
+    </a>
+  </div>
+</div>
+
+<!-- 💌 LETTER -->
+<div id="letter">
+  <div class="letter-box">
+    <strong>My Aksh ❤️</strong><br><br>
+    Every smile of yours makes my world brighter.  
+    I promise to stand by you always 🌹<br><br>
+    Forever Yours 💕<br><br>
+    <button class="btn" onclick="closeLetter()">Close</button>
+  </div>
+</div>
+
+<script>
+/* ❤️ HEART BACKGROUND */
+function createHeart(){
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="💖";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.animationDuration=(6+Math.random()*4)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),10000);
+}
+setInterval(createHeart,500);
+
+/* 🎵 MUSIC UNLOCK */
+document.body.addEventListener("click",()=>{
+  const music=document.getElementById("music");
+  if(music.paused) music.play();
+},{once:true});
+
+/* ✅ BUTTON LOGIC */
+let noCount=0;
+
+function yesClick(){
+  document.getElementById("slider").style.transform="translateX(100%)";
+  document.getElementById("yesContent").style.display="block";
+  document.getElementById("music").play();
+
+  document.getElementById("whatsapp").href =
+   "https://wa.me/?text=I%20said%20YES%20💖%20Happy%20Valentine!";
+}
+
+function noClick(){
+  noCount++;
+  if(noCount>=2){
+    alert("Bas bas 😅 YES pe click kar ❤️");
+  }
+}
+
+/* 💌 LETTER */
+function openLetter(){
+  document.getElementById("letter").style.display="flex";
+  document.body.style.overflow="hidden";
+}
+function closeLetter(){
+  document.getElementById("letter").style.display="none";
+  document.body.style.overflow="";
+}
+</script>
+
+</body>
+</html>
